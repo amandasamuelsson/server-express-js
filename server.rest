@@ -1,0 +1,21 @@
+GET http://localhost:3009/api/cats
+
+###
+
+GET http://localhost:3009/api/cats/1
+
+###
+ 
+DELETE http://localhost:3009/api/cats/1
+
+###
+
+POST http://localhost:3009/api/cats
+Content-Type: application/json
+
+{
+    "name": "Puss in Boots",
+    "description": "Puss in Boots is a main character in the Shrek franchise, also being portrayed as the title character and protagonist of the film Puss in Boots (2011).",
+    "color": "orange",
+    "breed": "mixed"
+}
