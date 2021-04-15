@@ -34,7 +34,7 @@ const cats = [
     }
 ];
 
-//parse incoming body from json to jsobject 
+//Parse incoming body from json to jsobject 
 app.use(express.json());
 
 app.get('/api/cats/:id', (req, res) => {
@@ -45,8 +45,7 @@ app.get('/api/cats/:id', (req, res) => {
     })
 
     if(!foundCat) {
-        res.json({"Error": "Detta id finns inte"});
- 
+        res.status(404).json({"Error": "This id does not exist"});
     }
 
     res.json(foundCat);
@@ -66,44 +65,47 @@ app.post('/api/cats', (req, res) => {
         }
     })
     idToSave++
+    bodyToSave.id = idToSave
 
-    cats.push({
-        id: idToSave,
-        body: bodyToSave
-    })
-    res.json({
-        status: "Added new cat"
-    })
+    cats.push(bodyToSave);
+
+    res.status(201).json({
+        success: true
+    });
 });
 
 app.put('/api/cats/:id', (req, res) => {
     const id = req.params.id;
     const bodyToUpdate = req.body
-    const updatedCat = {
-        id: id,
-        body: bodyToUpdate
-    };
+    
+    bodyToUpdate.id = parseInt(id)
 
     for (let i = 0; i < cats.length; i++) {
         if (cats[i].id == id) {
-            cats[i] = updatedCat;
+            cats[i] = bodyToUpdate;
             return res.status(201).send({
-                success: true,
-                updatedCat
-        })
-    }
-}
-    res.json(updatedCat);
+                success: true
+            });
+        }
+    }   
 });
 
 app.delete('/api/cats/:id', (req, res) => {
     let index = cats.findIndex((cat) => {
         return cat.id == req.params.id
     });
+    if (index == -1) {
+        res.status(404).send('This id does not exist')
+        return
+    }
     cats.splice(index, 1)
 
-    return res.send(cats);
+    return res.status(200).send({
+        success: true
+    });
 });
+
+
 
 
 //Start the server
