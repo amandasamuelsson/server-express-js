@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3009;
+const port = 3000;
 const hostname = 'localhost';
 
 const cats = [
@@ -76,12 +76,35 @@ app.post('/api/cats', (req, res) => {
     })
 });
 
-app.delete('/api/cats/:id', (req, res) => {
+app.put('/api/cats/:id', (req, res) => {
     const id = req.params.id;
-    const index = cats.find(p => p == id)
-    const deletedCat = cats.splice(index, 1);
-    res.json(deletedCat);
-})
+    const bodyToUpdate = req.body
+    const updatedCat = {
+        id: id,
+        body: bodyToUpdate
+    };
+
+    for (let i = 0; i < cats.length; i++) {
+        if (cats[i].id == id) {
+            cats[i] = updatedCat;
+            return res.status(201).send({
+                success: true,
+                updatedCat
+        })
+    }
+}
+    res.json(updatedCat);
+});
+
+app.delete('/api/cats/:id', (req, res) => {
+    let index = cats.findIndex((cat) => {
+        return cat.id == req.params.id
+    });
+    cats.splice(index, 1)
+
+    return res.send(cats);
+});
+
 
 //Start the server
 app.listen(port, hostname, () => {

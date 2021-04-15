@@ -1,16 +1,12 @@
-GET http://localhost:3009/api/cats
+GET http://localhost:3000/api/cats
 
 ###
 
-GET http://localhost:3009/api/cats/1
-
-###
- 
-DELETE http://localhost:3009/api/cats/1
+GET http://localhost:3000/api/cats/3
 
 ###
 
-POST http://localhost:3009/api/cats
+POST http://localhost:3000/api/cats
 Content-Type: application/json
 
 {
@@ -19,3 +15,22 @@ Content-Type: application/json
     "color": "orange",
     "breed": "mixed"
 }
+
+###
+
+PUT http://localhost:3000/api/cats/1
+Content-Type: application/json
+
+{
+    "name": "Toulouse",
+    "description": "Toulouse is a major character in The Aristocats. He is an orange furred kitten who is the oldest child and eldest son of Duchess and the older brother of Marie and Berlioz",
+    "color": "orange",
+    "breed": "turkish angora"
+}
+
+###
+ 
+DELETE http://localhost:3000/api/cats/1
+
+
+
