@@ -34,8 +34,11 @@ const cats = [
     }
 ];
 
-//Parse incoming body from json to jsobject 
 app.use(express.json());
+
+app.get('/api/cats', (req, res) => {
+    res.json(cats);
+});
 
 app.get('/api/cats/:id', (req, res) => {
     const id = req.params.id
@@ -49,10 +52,6 @@ app.get('/api/cats/:id', (req, res) => {
     }
 
     res.json(foundCat);
-});
-
-app.get('/api/cats', (req, res) => {
-    res.json(cats);
 });
 
 app.post('/api/cats', (req, res) => {
@@ -104,9 +103,6 @@ app.delete('/api/cats/:id', (req, res) => {
         success: true
     });
 });
-
-
-
 
 //Start the server
 app.listen(port, hostname, () => {
